@@ -14,7 +14,7 @@ author = 'Adam Bates'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx.ext.autodoc'
+    'sphinx.ext.autodoc',
 ]
 pygments_style = 'sphinx'
 templates_path = ['_templates']
