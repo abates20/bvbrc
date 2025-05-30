@@ -7,7 +7,7 @@ data from BV-BRC in your own workflows.
 
 `bvbrc` is a python package that is intended to make interacting with the BV-BRC
 Data API within python code feel straightfoward and intuitive. Please reference
-the [bvbrc documentation]() for help using `bvbrc`.
+the [bvbrc documentation](https://bvbrc.readthedocs.io) for help using `bvbrc`.
 
 ## Installation
 

@@ -1,15 +1,29 @@
 [project]
 name = "bvbrc"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.2.0"
+description = "A python interface to the BV-BRC Data API"
 readme = "README.md"
 authors = [
     { name = "Adam Bates", email = "adambates923@gmail.com" }
 ]
+license = "MIT"
 requires-python = ">=3.9"
 dependencies = [
     "requests>=2.32.3",
 ]
+keywords = ["BV-BRC"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+[project.urls]
+documentation = "https://bvbrc.readthedocs.io"
+soure = "https://github.com/abates20/bvbrc"
+issues = "https://github.com/abates20/bvbrc/issues"
 
 [project.optional-dependencies]
 docs = [
@@ -30,3 +44,9 @@ dev = [
     "sphinx>=7.4.7",
     "sphinxawesome-theme>=5.3.2",
 ]
+
+[[tool.uv.index]]
+name = "test.pypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
