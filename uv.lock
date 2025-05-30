@@ -64,6 +64,14 @@ dependencies = [
     { name = "requests" },
 ]
 
+[package.optional-dependencies]
+docs = [
+    { name = "sphinx", version = "7.4.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "sphinxawesome-theme" },
+]
+
 [package.dev-dependencies]
 dev = [
     { name = "beautifulsoup4" },
@@ -75,15 +83,14 @@ dev = [
     { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "sphinxawesome-theme" },
 ]
-docs = [
-    { name = "sphinx", version = "7.4.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "sphinxawesome-theme" },
-]
 
 [package.metadata]
-requires-dist = [{ name = "requests", specifier = ">=2.32.3" }]
+requires-dist = [
+    { name = "requests", specifier = ">=2.32.3" },
+    { name = "sphinx", marker = "extra == 'docs'", specifier = ">=7.4.7" },
+    { name = "sphinxawesome-theme", marker = "extra == 'docs'", specifier = ">=5.3.2" },
+]
+provides-extras = ["docs"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -91,10 +98,6 @@ dev = [
     { name = "pandas", specifier = ">=2.0.0" },
     { name = "polars", specifier = ">=1.0.0" },
     { name = "ruff", specifier = ">=0.11.11" },
-    { name = "sphinx", specifier = ">=7.4.7" },
-    { name = "sphinxawesome-theme", specifier = ">=5.3.2" },
-]
-docs = [
     { name = "sphinx", specifier = ">=7.4.7" },
     { name = "sphinxawesome-theme", specifier = ">=5.3.2" },
 ]
