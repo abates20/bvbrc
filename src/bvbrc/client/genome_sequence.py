@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class GenomeSequenceClient(Client):
     """
     Data Type : genome_sequence
-    
+
     Primary Key : sequence_id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -97,7 +97,7 @@ class GenomeSequenceClient(Client):
     version = Field("version")
     "integer"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="genome_sequence", api_key=api_key)
 
     def __repr__(self) -> str:

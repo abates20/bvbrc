@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class PathwayRefClient(Client):
     """
     Data Type : pathway_ref
-    
+
     Primary Key : id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -52,7 +52,7 @@ class PathwayRefClient(Client):
     pathway_name = Field("pathway_name")
     "string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="pathway_ref", api_key=api_key)
 
     def __repr__(self) -> str:

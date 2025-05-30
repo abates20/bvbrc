@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class SpikeVariantClient(Client):
     """
     Data Type : spike_variant
-    
+
     Primary Key : id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -52,7 +52,7 @@ class SpikeVariantClient(Client):
     total_isolates = Field("total_isolates")
     "integer"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="spike_variant", api_key=api_key)
 
     def __repr__(self) -> str:

@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class FeatureSequenceClient(Client):
     """
     Data Type : feature_sequence
-    
+
     Primary Key : md5
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -31,7 +31,7 @@ class FeatureSequenceClient(Client):
     sequence_type = Field("sequence_type")
     "string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="feature_sequence", api_key=api_key)
 
     def __repr__(self) -> str:

@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class TaxonomyClient(Client):
     """
     Data Type : taxonomy
-    
+
     Primary Key : taxon_id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -94,7 +94,7 @@ class TaxonomyClient(Client):
     taxon_rank = Field("taxon_rank")
     "string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="taxonomy", api_key=api_key)
 
     def __repr__(self) -> str:

@@ -35,7 +35,7 @@ __all__ = [
     "SubsystemRefClient",
     "SubsystemClient",
     "SurveillanceClient",
-    "TaxonomyClient"
+    "TaxonomyClient",
 ]
 
 # Base client object and other exports

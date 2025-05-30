@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class PathwayClient(Client):
     """
     Data Type : pathway
-    
+
     Primary Key : id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -94,7 +94,7 @@ class PathwayClient(Client):
     user_write = Field("user_write")
     "array of strings"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="pathway", api_key=api_key)
 
     def __repr__(self) -> str:

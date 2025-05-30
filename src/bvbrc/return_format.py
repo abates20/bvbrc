@@ -9,7 +9,7 @@ class ReturnFormat(Enum):
     This enumerator is intended to be used when submitting a request with one of
     the client objects to specify what the format of the reponse content should
     be.
-    
+
     .. note::
         Many of the alternate return formats (besides the default JSON) do not
         work with the `Client.get()` method and can only be used with the

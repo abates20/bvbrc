@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class SpGeneClient(Client):
     """
     Data Type : sp_gene
-    
+
     Primary Key : id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -118,7 +118,7 @@ class SpGeneClient(Client):
     user_write = Field("user_write")
     "array of strings"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="sp_gene", api_key=api_key)
 
     def __repr__(self) -> str:

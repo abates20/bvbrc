@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class SequenceFeatureClient(Client):
     """
     Data Type : sequence_feature
-    
+
     Primary Key : id
     """
-    
+
     aa_sequence_md5 = Field("aa_sequence_md5")
     "string"
 
@@ -118,7 +118,7 @@ class SequenceFeatureClient(Client):
     variant_types = Field("variant_types")
     "string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="sequence_feature", api_key=api_key)
 
     def __repr__(self) -> str:

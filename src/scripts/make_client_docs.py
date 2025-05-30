@@ -36,7 +36,7 @@ for client_file in CLIENT_SRC_DIR.glob("*.py"):
 
     # Extract the name of the client class
     client_name = CLASS_DEF_PATTERN.findall(client_src)[0]
-    
+
     # Create the doc file
     doc_file = CLIENT_DOC_DIR.joinpath(client_file.with_suffix(".rst").name)
     with doc_file.open("w") as f:

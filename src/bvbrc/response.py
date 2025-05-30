@@ -9,7 +9,7 @@ from bvbrc.return_format import ReturnFormat
 from bvbrc.errors import ToDataFrameError
 from bvbrc._utils import requires_dep
 
-if TYPE_CHECKING: # Optional dependencies for type hinting
+if TYPE_CHECKING:  # Optional dependencies for type hinting
     import polars
     import pandas
 
@@ -22,7 +22,7 @@ class BVBRCResponse(Response):
     methods to make interacting with a response from the BV-BRC API more
     convenient.
     """
-    
+
     def __init__(self):
         super().__init__()
 
@@ -59,11 +59,11 @@ class BVBRCResponse(Response):
         If the "Content-Range" attribute is not found in the response header,
         then this property will be `None`.
         """
-        
+
         content_range = self.headers.get("content-range")
         if content_range is None:
             raise None
-        
+
         crange_pattern = re.compile(r"items (\d+)-(\d+)/(\d+)")
         matches = crange_pattern.findall(content_range)
         if len(matches) == 0:
@@ -71,9 +71,9 @@ class BVBRCResponse(Response):
                 "Content range header did not match expected pattern. Expected "
                 f"{repr(crange_pattern.pattern)} but got {repr(content_range)}."
             )
-        
+
         return tuple(int(x) for x in matches[0])
-    
+
     @property
     def return_format(self) -> Optional[ReturnFormat]:
         """
@@ -81,7 +81,7 @@ class BVBRCResponse(Response):
         "Content-Type" header. If the "Content-Type" header is not found or does
         not contain a valid return format, then this will be `None`.
         """
-        
+
         ctype_header = self.headers.get("content-type")
         if ctype_header is None:
             return None
@@ -137,28 +137,28 @@ class BVBRCResponse(Response):
         3  562.161162   Escherichia coli 495R2             2018       Fly
         4  562.161166    Escherichia coli 520R             2018       Fly
         """
-        
+
         import pandas as pd
 
-        fmt = self.return_format # Get the format of the response's content
+        fmt = self.return_format  # Get the format of the response's content
 
         if fmt in [ReturnFormat.CSV, ReturnFormat.TSV]:
             return pd.read_csv(
                 io.StringIO(self.text),
                 sep="," if fmt == ReturnFormat.CSV else "\t",
-                dtype={"genome_id": str} # Make sure genome_id is parsed as string
+                dtype={"genome_id": str},  # Make sure genome_id is parsed as string
             )
-        
+
         elif fmt == ReturnFormat.JSON:
             return pd.read_json(io.StringIO(self.text))
-        
+
         elif fmt == ReturnFormat.SOLR_JSON:
             solr_json: dict[str, dict] = self.json()
             dicts: dict = solr_json.get("response", {}).get("docs")
             if dicts is None:
                 raise Exception("Unable to find data in SOLR JSON response.")
             return pd.DataFrame.from_records(dicts)
-        
+
         elif fmt == ReturnFormat.EXCEL:
             return pd.read_excel(io.BytesIO(self.content))
 
@@ -225,33 +225,35 @@ class BVBRCResponse(Response):
         │ 562.161166 ┆ Escherichia coli 520R   ┆ 2018            ┆ Fly       │
         └────────────┴─────────────────────────┴─────────────────┴───────────┘
         """
-        
+
         import polars as pl
 
-        fmt = self.return_format # Get the format of the response's content
+        fmt = self.return_format  # Get the format of the response's content
 
         if fmt in [ReturnFormat.CSV, ReturnFormat.TSV]:
             return pl.read_csv(
                 io.StringIO(self.text),
                 separator="," if fmt == ReturnFormat.CSV else "\t",
-                schema_overrides={"genome_id": str} # Make sure genome_id is parsed as string
+                schema_overrides={
+                    "genome_id": str
+                },  # Make sure genome_id is parsed as string
             )
-        
+
         elif fmt == ReturnFormat.JSON:
             return pl.read_json(io.StringIO(self.text))
-        
+
         elif fmt == ReturnFormat.SOLR_JSON:
             solr_json: dict[str, dict] = self.json()
             dicts: dict = solr_json.get("response", {}).get("docs")
             if dicts is None:
                 raise Exception("Unable to find data in SOLR JSON response.")
             return pl.from_dicts(dicts)
-        
+
         elif fmt == ReturnFormat.EXCEL:
             return pl.read_excel(io.BytesIO(self.content))
 
         raise ToDataFrameError(fmt, "polars")
-    
+
     def write_file(self, filepath: Union[str, os.PathLike]):
         """
         Write the response content to the specified file path.
@@ -278,7 +280,7 @@ class BVBRCResponse(Response):
         ... )
         >>> response.write_file("511145.12.fasta") # writes FASTA response to file
         """
-        
+
         with open(filepath, "wb") as file:
             file.write(self.content)
 

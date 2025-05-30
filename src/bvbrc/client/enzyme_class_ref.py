@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class EnzymeClassRefClient(Client):
     """
     Data Type : enzyme_class_ref
-    
+
     Primary Key : ec_number
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -31,7 +31,7 @@ class EnzymeClassRefClient(Client):
     go = Field("go")
     "array of case insensitive strings"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="enzyme_class_ref", api_key=api_key)
 
     def __repr__(self) -> str:

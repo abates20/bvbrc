@@ -44,19 +44,19 @@ def to_camel_case(string: str):
     pieces = []
     for piece in string.split("_"):
         if piece == "ppi":
-            pieces.append("PPI") # Convert ppi to PPI instead of Ppi
+            pieces.append("PPI")  # Convert ppi to PPI instead of Ppi
         else:
             pieces.append(piece[0].upper() + piece[1:])
     return "".join(pieces)
 
 
 def scrape_doc(
-        datatype: str,
-        endpoint_doc_url: str,
-        cls_template: str,
-        attr_template: str,
-        pk_attr_template: str
-    ) -> str:
+    datatype: str,
+    endpoint_doc_url: str,
+    cls_template: str,
+    attr_template: str,
+    pk_attr_template: str,
+) -> str:
     """
     Scrapes the doc page for a datatype in the BV-BRC Data API to build
     python code for a class with each of the fields for that datatype.
@@ -70,7 +70,9 @@ def scrape_doc(
     header = soup.body.find("h3", string="Attributes")
     attr_list = header.find_next_sibling("ul")
     for ele in attr_list.find_all("li"):
-        attr_name, attr_type, _ = [clean_text(child.get_text()) for child in ele.children]
+        attr_name, attr_type, _ = [
+            clean_text(child.get_text()) for child in ele.children
+        ]
 
         # Handle primary keys attributes
         if attr_name.endswith("*"):
@@ -87,22 +89,19 @@ def scrape_doc(
             attr_name_py = "_" + attr_name
         else:
             attr_name_py = attr_name
-        
+
         # Add the formatted attribute to the list of attributes
         attrs.append(
             template.format(
-                attr_name_py=attr_name_py,
-                attr_name=attr_name,
-                attr_type=attr_type
+                attr_name_py=attr_name_py, attr_name=attr_name, attr_type=attr_type
             )
         )
-
 
     cls_def = cls_template.format(
         cls_name=to_camel_case(datatype) + "Client",
         datatype=datatype,
         primary_key=primary_key,
-        attributes="".join(attrs).strip()
+        attributes="".join(attrs).strip(),
     )
     return cls_def
 
@@ -149,16 +148,9 @@ from bvbrc.RQL import Field
 
 # Build a module file for each datatype
 for datatype, url in get_data_types(bv.DOC_URL):
-    cls_str = scrape_doc(
-        datatype,
-        url,
-        CLS_TEMPLATE,
-        ATTR_TEMPLATE,
-        PK_ATTR_TEMPLATE
-    )
+    cls_str = scrape_doc(datatype, url, CLS_TEMPLATE, ATTR_TEMPLATE, PK_ATTR_TEMPLATE)
     module = MODULE_TEMPLATE.format(cls=cls_str)
-    
+
     module_path = Path().joinpath("src", "bvbrc", "client", f"{datatype}.py")
     with module_path.open("w") as file:
         file.write(module)
-

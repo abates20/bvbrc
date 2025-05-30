@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class StructuredAssertionClient(Client):
     """
     Data Type : structured_assertion
-    
+
     Primary Key : id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -67,7 +67,7 @@ class StructuredAssertionClient(Client):
     value = Field("value")
     "string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="structured_assertion", api_key=api_key)
 
     def __repr__(self) -> str:

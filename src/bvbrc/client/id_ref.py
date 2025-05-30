@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class IdRefClient(Client):
     """
     Data Type : id_ref
-    
+
     Primary Key : id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -34,7 +34,7 @@ class IdRefClient(Client):
     uniprotkb_accession = Field("uniprotkb_accession")
     "string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="id_ref", api_key=api_key)
 
     def __repr__(self) -> str:

@@ -19,21 +19,21 @@ MAX_RESULTS = 25000
 class RQLExpr:
     """
     A Resource Query Language (RQL) expression.
-    
+
     This class represents a single RQL expression that can be combined with
     other expressions using logical operators (AND, OR) to build complex queries.
-    
+
     Attributes
     ----------
     expr : str
         The RQL expression string.
-        
+
     Examples
     --------
     >>> expr = RQLExpr("eq(genome_name,Mycobacterium)")
     >>> print(expr)
     eq(genome_name,Mycobacterium)
-    
+
     >>> combined = RQLExpr("eq(genome_name,Mycobacterium)") & RQLExpr("gt(contigs,1)")
     >>> print(combined)
     and(eq(genome_name,Mycobacterium),gt(contigs,1))
@@ -42,7 +42,7 @@ class RQLExpr:
     def __init__(self, expr: str):
         """
         Initialize a Resource Query Language (RQL) expression object.
-        
+
         Attributes
         ----------
         expr : str
@@ -64,17 +64,17 @@ class RQLExpr:
     def __and__(self, other: Union["RQLExpr", str]) -> "RQLExpr":
         """
         Combine two RQL expressions with logical AND.
-        
+
         Parameters
         ----------
         other : RQLExpr or str
             The other expression to combine with this one.
-            
+
         Returns
         -------
         RQLExpr
             A new RQLExpr representing the AND combination.
-            
+
         Examples
         --------
         >>> expr1 = RQLExpr("eq(genome_name,Mycobacterium)")
@@ -85,24 +85,24 @@ class RQLExpr:
         """
 
         return _and(self, other)
-    
+
     def __rand__(self, other: str) -> "RQLExpr":
         """
         Combine two RQL expressions with logical AND.
 
         Used if the left side of the expression is a string instead of an
         RQLExpr object.
-        
+
         Parameters
         ----------
         other : str
             The other expression to combine with this one.
-            
+
         Returns
         -------
         RQLExpr
             A new RQLExpr representing the AND combination.
-            
+
         Examples
         --------
         >>> expr1 = RQLExpr("eq(genome_name,Mycobacterium)")
@@ -117,17 +117,17 @@ class RQLExpr:
     def __or__(self, other: Union["RQLExpr", str]) -> "RQLExpr":
         """
         Combine two RQL expressions with logical OR.
-        
+
         Parameters
         ----------
         other : RQLExpr or str
             The other expression to combine with this one.
-            
+
         Returns
         -------
         RQLExpr
             A new RQLExpr representing the OR combination.
-            
+
         Examples
         --------
         >>> expr1 = RQLExpr("eq(genome_name,Mycobacterium)")
@@ -138,24 +138,24 @@ class RQLExpr:
         """
 
         return _or(self, other)
-    
+
     def __ror__(self, other: str) -> "RQLExpr":
         """
         Combine two RQL expressions with logical OR.
 
         Used if the left side of the expression is a string instead of an
         RQLExpr object.
-        
+
         Parameters
         ----------
         other : str
             The other expression to combine with this one.
-            
+
         Returns
         -------
         RQLExpr
             A new RQLExpr representing the OR combination.
-            
+
         Examples
         --------
         >>> expr1 = "eq(genome_name,Mycobacterium)"
@@ -166,11 +166,11 @@ class RQLExpr:
         """
 
         return _or(other, self)
-    
+
     def __copy__(self) -> "RQLExpr":
         """
         Create a shallow copy of the RQLExpr.
-        
+
         Returns
         -------
         RQLExpr
@@ -178,41 +178,41 @@ class RQLExpr:
         """
 
         return RQLExpr(self.expr)
-    
+
 
 class Field:
     """
     Represents a field in an RQL query.
-    
+
     This class provides a convenient interface for building RQL expressions
     involving database fields, supporting comparison operations and sorting.
-    
+
     Attributes
     ----------
     name : str
         The field name.
-        
+
     Examples
     --------
     >>> field = Field("genome_name")
     >>> expr = field == "Mycobacterium"
     >>> print(expr)
     eq(genome_name,Mycobacterium)
-    
+
     >>> sort_field = +Field("genome_name")  # ascending sort
     >>> print(sort_field)
     +genome_name
     """
-    
+
     def __init__(self, name: str):
         """
         Initialize a Field object.
-        
+
         Parameters
         ----------
         name : str
             The field name.
-            
+
         Examples
         --------
         >>> field = Field("genome_name")
@@ -225,17 +225,17 @@ class Field:
 
     def __str__(self) -> str:
         return self.name
-    
+
     def __pos__(self) -> "Field":
         """
         Mark field for ascending sort order.
-        
+
         Returns
         -------
         Field
             A new Field instance where the name is prefixed with '+' for
             ascending sort.
-            
+
         Examples
         --------
         >>> field = Field("genome_length")
@@ -246,17 +246,17 @@ class Field:
 
         name = self.name.lstrip("+-")
         return Field(f"+{name}")
-    
+
     def __neg__(self) -> "Field":
         """
         Mark field for descending sort order.
-        
+
         Returns
         -------
         Field
             A new Field instance where the name is prefixed with '-' for
             descending sort.
-            
+
         Examples
         --------
         >>> field = Field("genome_length")
@@ -267,22 +267,22 @@ class Field:
 
         name = self.name.lstrip("+-")
         return Field(f"-{name}")
-    
+
     def __eq__(self, value: Any) -> RQLExpr:
         """
         Create an RQL equality expression for filtering (i.e., the field must be
         equal to the specified value).
-        
+
         Parameters
         ----------
         value : Any
             The value that the field should be equal to.
-            
+
         Returns
         -------
         RQLExpr
             An RQL equality expression.
-            
+
         Examples
         --------
         >>> field = Field("genome_name")
@@ -292,22 +292,22 @@ class Field:
         """
 
         return _eq(self, value)
-    
+
     def __ne__(self, value: Any) -> RQLExpr:
         """
         Create a not-equal RQL expression for filtering (i.e., the field must be
         not equal to the specified value).
-        
+
         Parameters
         ----------
         value : Any
             The value that the field should be not equal to.
-            
+
         Returns
         -------
         RQLExpr
             An RQL not-equal expression.
-            
+
         Examples
         --------
         >>> field = Field("genome_name")
@@ -317,22 +317,22 @@ class Field:
         """
 
         return _ne(self, value)
-    
+
     def __gt__(self, value: Any) -> RQLExpr:
         """
         Create a greater-than RQL expression for filtering (i.e., the field must
         be greater than the specified value).
-        
+
         Parameters
         ----------
         value : Any
             The value to compare the field against.
-            
+
         Returns
         -------
         RQLExpr
             An RQL greater-than expression.
-            
+
         Examples
         --------
         >>> field = Field("contigs")
@@ -342,22 +342,22 @@ class Field:
         """
 
         return _gt(self, value)
-    
+
     def __lt__(self, value: Any) -> RQLExpr:
         """
         Create a less-than RQL expression for filtering (i.e., the field must be
         less than the specified value).
-        
+
         Parameters
         ----------
         value : Any
             The value to compare the field against.
-            
+
         Returns
         -------
         RQLExpr
             An RQL less-than expression.
-            
+
         Examples
         --------
         >>> field = Field("contigs")
@@ -372,18 +372,18 @@ class Field:
         """
         Create a greater-than-or-equal RQL expression for filtering (i.e., the
         field must be greater than or equal to the specified value).
-        
+
         Parameters
         ----------
         value : Any
             The value to compare the field against.
-            
+
         Returns
         -------
         RQLExpr
             An RQL greater-than-or-equal expression (implemented as OR of > and
             ==).
-            
+
         Examples
         --------
         >>> field = Field("contigs")
@@ -392,27 +392,24 @@ class Field:
         or(gt(contigs,10),eq(contigs,10))
         """
 
-        return _or(
-            _gt(self, value),
-            _eq(self, value)
-        )
-    
+        return _or(_gt(self, value), _eq(self, value))
+
     def __le__(self, value: Any) -> RQLExpr:
         """
         Create a less-than-or-equal RQL expression for filtering (i.e., the
         field must be less than or equal to the specified value).
-        
+
         Parameters
         ----------
         value : Any
             The value to compare the field against.
-            
+
         Returns
         -------
         RQLExpr
             An RQL less-than-or-equal expression (implemented as OR of < and
             ==).
-            
+
         Examples
         --------
         >>> field = Field("contigs")
@@ -421,26 +418,23 @@ class Field:
         or(lt(contigs,100),eq(contigs,100))
         """
 
-        return _or(
-            _lt(self, value),
-            _eq(self, value)
-        )
-    
+        return _or(_lt(self, value), _eq(self, value))
+
     def isin(self, values: Iterable[Any]) -> RQLExpr:
         """
         Create an 'in' RQL expression for checking if field value is in a list
         (i.e., the field must be equal to one of the values in the list).
-        
+
         Parameters
         ----------
         values : Iterable[Any]
             An iterable of values to check against.
-            
+
         Returns
         -------
         RQLExpr
             An RQL 'in' expression.
-            
+
         Examples
         --------
         >>> field = Field("genome_name")
@@ -450,21 +444,21 @@ class Field:
         """
 
         return _in(self, *values)
-    
+
 
 class RQLQuery:
     """
     A class representing an RQL query (i.e., a combination of RQL expressions).
-    
+
     This class provides a fluent interface for building complex RQL queries
     with filtering, selection, sorting, and limiting capabilities.
-    
+
     Attributes
     ----------
     content_type : str
         The content type for the RQL query. This is incorporated into the
         request header when the query is submitted.
-        
+
     Examples
     --------
     >>> query = RQLQuery.build(
@@ -480,11 +474,11 @@ class RQLQuery:
     content_type = "application/rqlquery+x-www-form-urlencoded"
 
     def __init__(
-            self,
-            filter: Optional[RQLExpr] = None,
-            select: Optional[RQLExpr] = None,
-            sort: Optional[RQLExpr] = None,
-            limit: Optional[RQLExpr] = None
+        self,
+        filter: Optional[RQLExpr] = None,
+        select: Optional[RQLExpr] = None,
+        sort: Optional[RQLExpr] = None,
+        limit: Optional[RQLExpr] = None,
     ):
         """
         Initialize an RQL query object.
@@ -506,10 +500,7 @@ class RQLQuery:
         """
 
         self._exprs: dict[str, RQLExpr] = dict(
-            filter=filter,
-            select=select,
-            sort=sort,
-            limit=limit
+            filter=filter, select=select, sort=sort, limit=limit
         )
 
     def __repr__(self) -> str:
@@ -525,12 +516,12 @@ class RQLQuery:
     def __deepcopy__(self, memo) -> "RQLQuery":
         """
         Create a deep copy of the RQLQuery.
-        
+
         Parameters
         ----------
         memo : dict
             Memoization dictionary for the copy operation.
-            
+
         Returns
         -------
         RQLQuery
@@ -538,17 +529,17 @@ class RQLQuery:
         """
 
         return RQLQuery(**{key: copy(expr) for key, expr in self._exprs.items()})
-    
+
     @property
     def expression(self) -> str:
         """
         Get the full RQL query expression.
-        
+
         Returns
         -------
         str
             The complete RQL query as a string. Any spaces are replaced by '+'.
-            
+
         Examples
         --------
         >>> query = RQLQuery(filter=RQLExpr("eq(genome_name,Mycobacterium)"))
@@ -558,17 +549,17 @@ class RQLQuery:
 
         query_str = "&".join(str(e) for e in self._exprs.values() if e is not None)
         return _utils.url_encode(query_str)
-    
+
     @property
     def no_limit(self) -> bool:
         """
         Check if the query limit is set to `None` (unlimited).
-        
+
         Returns
         -------
         bool
             True if the limit is set to `None`, False otherwise.
-            
+
         Examples
         --------
         >>> query = RQLQuery(limit=RQLExpr("limit(None,0)"))
@@ -584,7 +575,6 @@ class RQLQuery:
             return limit == "None"
         return False
 
-    
     @classmethod
     def build(
         cls,
@@ -593,11 +583,11 @@ class RQLQuery:
         sort: Iterable[Union[str, Field]] = ...,
         limit: Union[int, Literal["max"]] = ...,
         start: int = 0,
-        **constraints: Any
+        **constraints: Any,
     ) -> "RQLQuery":
         """
         Build an RQL query object.
-        
+
         Parameters
         ----------
         \*predicates : RQL.RQLExpr
@@ -620,12 +610,12 @@ class RQLQuery:
         \*\*constraints : any
             Additional keyword arguments that specify field constraints or filters.
             Each key-value pair represents a field name and its required value.
-            
+
         Returns
         -------
         RQLQuery
             A complete RQL query object.
-            
+
         Examples
         --------
         >>> query = RQLQuery.build(
@@ -638,10 +628,10 @@ class RQLQuery:
         >>> print(query)
         RQL query: 'and(eq(genome_name,Mycobacterium),eq(taxon_lineage_names,Bacteria))&select(genome_id,genome_name)&sort(+genome_name)&limit(100,0)'
         """
-        
+
         query = cls()
         query = query.filter(*predicates, **constraints)
-        
+
         if select is not Ellipsis:
             query = query.select(*select)
         if sort is not Ellipsis:
@@ -651,8 +641,8 @@ class RQLQuery:
             if limit == "max":
                 limit = MAX_RESULTS
             query = query.limit(limit, start)
-        elif start != 0: # Warn if start is given without limit
-            limit = 25 # default limit
+        elif start != 0:  # Warn if start is given without limit
+            limit = 25  # default limit
             warnings.warn(
                 f"Start was specified without limit. Using default limit of {limit}."
                 " Please specifiy the limit if also setting the start value."
@@ -669,7 +659,7 @@ class RQLQuery:
 
         The query object is copied before being modified, and then the copied
         instance is returned.
-        
+
         Parameters
         ----------
         \*predicates : RQL.RQLExpr
@@ -679,12 +669,12 @@ class RQLQuery:
             Additional `field=value` keyword arguments that specify field
             constraints or filters. Each key-value pair represents a field name
             and its required value.
-            
+
         Returns
         -------
         RQLQuery
             A new RQLQuery instance with the specified filters.
-            
+
         Examples
         --------
         >>> import bvbrc as bv
@@ -695,7 +685,7 @@ class RQLQuery:
         >>> print(query)
         RQL query: 'and(eq(genome_name,Mycobacterium),eq(taxon_lineage_names,Bacteria))'
         """
-        
+
         more_predicates = tuple(_eq(field, val) for field, val in constraints.items())
         all_predicates = predicates + more_predicates
 
@@ -714,17 +704,17 @@ class RQLQuery:
 
         The query object is copied before being modified, and then the copied
         instance is returned.
-        
+
         Parameters
         ----------
         \*fields : Union[str, Field]
             Variable number of field names or Field objects to select.
-            
+
         Returns
         -------
         RQLQuery
             A new RQLQuery instance with the select clause.
-            
+
         Examples
         --------
         >>> import bvbrc as bv
@@ -736,7 +726,7 @@ class RQLQuery:
         >>> print(query)
         RQL query: 'select(genome_id,genome_name,taxon_lineage_names)'
         """
-        
+
         self_copy._exprs["select"] = _select(*fields)
         return self_copy
 
@@ -745,19 +735,19 @@ class RQLQuery:
         """
         Specify sorting for query results. replacing any previously specified
         sorting that the query may have contained.
-        
+
         Parameters
         ----------
         \*fields : Union[str, Field]
             Variable number of field names or Field objects to sort by.
             Fields must start with '+' for ascending or '-' for descending
             order.
-            
+
         Returns
         -------
         RQLQuery
             A new RQLQuery instance with the sort clause.
-            
+
         Examples
         --------
         >>> import bvbrc as bv
@@ -765,7 +755,7 @@ class RQLQuery:
         >>> print(query)
         RQL query: 'sort(+genome_name,-genome_length)'
         """
-        
+
         self_copy._exprs["sort"] = _sort(*fields)
         return self_copy
 
@@ -775,19 +765,19 @@ class RQLQuery:
         Specifiy the limit for the number of results returned and (optionally)
         the starting index for the first result. Replaces the previously set
         limit if the query contained one.
-        
+
         Parameters
         ----------
         count : int
             Maximum number of results to return.
         start : int, default 0
             Starting offset for first result returned.
-            
+
         Returns
         -------
         RQLQuery
             A new RQLQuery instance with the limit clause.
-            
+
         Examples
         --------
         >>> import bvbrc as bv
@@ -795,41 +785,41 @@ class RQLQuery:
         >>> print(query)
         RQL query: 'limit(100,50)'
         """
-        
+
         self_copy._exprs["limit"] = _limit(count, start)
         return self_copy
 
-    
+
 def keyword(value: Any) -> RQLExpr:
     """
     Create a keyword RQL search expression.
 
     Keyword expressions are used to search for a keyword across all fields.
-    
+
     Parameters
     ----------
     value : Any
         The keyword or phrase to search for.
-        
+
     Returns
     -------
     RQLExpr
         An RQL keyword search expression.
-        
+
     Examples
     --------
     >>> expr = keyword("mycobacterium tuberculosis")
     >>> print(expr)
     keyword(mycobacterium tuberculosis)
     """
-    
-    return _keyword(value)
 
+    return _keyword(value)
 
 
 # ------------------------------------------------------------------------- #
 # Private methods for each of the RQL operators available in the BV-BRC API #
 # ------------------------------------------------------------------------- #
+
 
 def _eq(field: Union[str, Field], value: Any) -> RQLExpr:
     return RQLExpr(f"eq({field},{value})")

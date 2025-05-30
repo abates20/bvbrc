@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class EpitopeClient(Client):
     """
     Data Type : epitope
-    
+
     Primary Key : epitope_id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -79,7 +79,7 @@ class EpitopeClient(Client):
     total_assays = Field("total_assays")
     "integer"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="epitope", api_key=api_key)
 
     def __repr__(self) -> str:

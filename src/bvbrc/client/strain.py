@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class StrainClient(Client):
     """
     Data Type : strain
-    
+
     Primary Key : id
     """
-    
+
     _1_pb2 = Field("1_pb2")
     "array of strings"
 
@@ -85,7 +85,7 @@ class StrainClient(Client):
     isolation_country = Field("isolation_country")
     "case insensitive string"
 
-    l = Field("l") # noqa: E741
+    l = Field("l")  # noqa: E741
     "array of strings"
 
     lab_host = Field("lab_host")
@@ -145,7 +145,7 @@ class StrainClient(Client):
     user_write = Field("user_write")
     "array of strings"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="strain", api_key=api_key)
 
     def __repr__(self) -> str:

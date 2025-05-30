@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class MiscNiaidSgcClient(Client):
     """
     Data Type : misc_niaid_sgc
-    
+
     Primary Key : target_id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -49,7 +49,7 @@ class MiscNiaidSgcClient(Client):
     target_status = Field("target_status")
     "string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="misc_niaid_sgc", api_key=api_key)
 
     def __repr__(self) -> str:

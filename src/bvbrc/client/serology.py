@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class SerologyClient(Client):
     """
     Data Type : serology
-    
+
     Primary Key : id
     """
-    
+
     additional_metadata = Field("additional_metadata")
     "array of case insensitive strings"
 
@@ -115,7 +115,7 @@ class SerologyClient(Client):
     virus_identifier = Field("virus_identifier")
     "case insensitive string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="serology", api_key=api_key)
 
     def __repr__(self) -> str:

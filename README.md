@@ -35,4 +35,4 @@ pip install polars
 This project is open source and contributions are welcome! If you are interested
 in contributing, please take a look at the [contributing guidelines][contributing].
 
-[contributing]: https://github.com/abates20/bvbrc/.github/CONTRIBUTING.md
+[contributing]: https://github.com/abates20/bvbrc/blob/main/.github/CONTRIBUTING.md

@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class SurveillanceClient(Client):
     """
     Data Type : surveillance
-    
+
     Primary Key : id
     """
-    
+
     additional_metadata = Field("additional_metadata")
     "array of case insensitive strings"
 
@@ -187,7 +187,9 @@ class SurveillanceClient(Client):
     infections_within_five_years = Field("infections_within_five_years")
     "array of case insensitive strings"
 
-    influenza_like_illness_over_the_past_year = Field("influenza_like_illness_over_the_past_year")
+    influenza_like_illness_over_the_past_year = Field(
+        "influenza_like_illness_over_the_past_year"
+    )
     "case insensitive string"
 
     initiation_of_treatment = Field("initiation_of_treatment")
@@ -331,7 +333,7 @@ class SurveillanceClient(Client):
     ventilation = Field("ventilation")
     "case insensitive string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="surveillance", api_key=api_key)
 
     def __repr__(self) -> str:

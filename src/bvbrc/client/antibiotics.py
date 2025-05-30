@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class AntibioticsClient(Client):
     """
     Data Type : antibiotics
-    
+
     Primary Key : pubchem_cid
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -70,7 +70,7 @@ class AntibioticsClient(Client):
     synonyms = Field("synonyms")
     "array of case insensitive strings"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="antibiotics", api_key=api_key)
 
     def __repr__(self) -> str:

@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class PPIClient(Client):
     """
     Data Type : ppi
-    
+
     Primary Key : id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -109,7 +109,7 @@ class PPIClient(Client):
     taxon_id_b = Field("taxon_id_b")
     "integer"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="ppi", api_key=api_key)
 
     def __repr__(self) -> str:

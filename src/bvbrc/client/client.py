@@ -24,7 +24,7 @@ class Client:
     (Bacterial and Viral Bioinformatics Resource Center) through its data API.
 
     All client objects are derived from this base class.
-    
+
     Attributes
     ----------
     BASE_URL : str
@@ -33,16 +33,18 @@ class Client:
         The data type this client instance is configured for.
     URL : str
         The complete URL endpoint for the specified datatype.
-    DOC_URL : str 
+    DOC_URL : str
         The documentation URL for the specified datatype.
     API_KEY : str or None
         The API key for authentication, if provided.
     """
 
-    def __init__(self, datatype: str, base_url: str = BASE_URL, api_key: Optional[str] = None):
+    def __init__(
+        self, datatype: str, base_url: str = BASE_URL, api_key: Optional[str] = None
+    ):
         """
         Initialize a new BV-BRC client instance.
-        
+
         Parameters
         ----------
         datatype : str
@@ -55,7 +57,7 @@ class Client:
         api_key : str, optional
             API key for authentication.
         """
-        
+
         self.BASE_URL: str = base_url
         self.datatype: str = datatype
         self.URL: str = f"{base_url}/{datatype}"
@@ -63,22 +65,24 @@ class Client:
         self.API_KEY: Optional[str] = api_key
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({repr(self.BASE_URL)}, {repr(self.datatype)})"
+        return (
+            f"{self.__class__.__name__}({repr(self.BASE_URL)}, {repr(self.datatype)})"
+        )
 
     def get(
-            self,
-            id: str,
-            *,
-            return_format: Union[str, ReturnFormat] = ReturnFormat.JSON,
-            timeout: Optional[_Timeout] = None
-        ) -> BVBRCResponse:
+        self,
+        id: str,
+        *,
+        return_format: Union[str, ReturnFormat] = ReturnFormat.JSON,
+        timeout: Optional[_Timeout] = None,
+    ) -> BVBRCResponse:
         """
         Retrieve a specific record by its unique identifier.
-        
+
         Fetches a single data record from the BV-BRC database using its unique
         ID. This is useful when you know the exact identifier of the record you
         want to retrieve.
-        
+
         Parameters
         ----------
         id : str
@@ -91,26 +95,26 @@ class Client:
         timeout : float or tuple, optional
             Timeout for the HTTP request. Can be a single float (total timeout)
             or a tuple of (connect_timeout, read_timeout).
-        
+
         Returns
         -------
         BVBRCResponse
             A response object (derived from the requests.Response object)
             containing the retrieved data and associated response metadata.
-        
+
         Examples
         --------
         Retrieve a genome by ID:
-        
+
         >>> import bvbrc as bv
         >>> genome_client = bv.GenomeClient()
         >>> response = genome_client.get("1313.5458")
-        
+
         Retrieve with custom format and timeout:
-        
+
         >>> response = genome_client.get(
-        ...     "1313.5458", 
-        ...     return_format=bv.ReturnFormat.CSV, 
+        ...     "1313.5458",
+        ...     return_format=bv.ReturnFormat.CSV,
         ...     timeout=30
         ... )
         """
@@ -118,28 +122,28 @@ class Client:
         rq_response = requests.get(
             f"{self.URL}/{id}",
             headers={"Accept": ReturnFormat(return_format).value},
-            timeout=timeout
+            timeout=timeout,
         )
         return BVBRCResponse.from_response(rq_response)
 
     def search(
-            self,
-            *predicates: RQL.RQLExpr,
-            select: Iterable[Union[str, RQL.Field]] = ...,
-            sort: Iterable[Union[str, RQL.Field]] = ...,
-            limit: Union[int, Literal["max"]] = ...,
-            start: int = 0,
-            return_format: Union[str, ReturnFormat] = ReturnFormat.JSON,
-            timeout: Optional[_Timeout] = None,
-            **constraints: Any
-        ) -> BVBRCResponse:
+        self,
+        *predicates: RQL.RQLExpr,
+        select: Iterable[Union[str, RQL.Field]] = ...,
+        sort: Iterable[Union[str, RQL.Field]] = ...,
+        limit: Union[int, Literal["max"]] = ...,
+        start: int = 0,
+        return_format: Union[str, ReturnFormat] = ReturnFormat.JSON,
+        timeout: Optional[_Timeout] = None,
+        **constraints: Any,
+    ) -> BVBRCResponse:
         """
         Search for records using provided parameters.
-        
+
         Sends a query to the BV-BRC API using Resource Query Language (RQL)
         expressions and field constraints. This is the primary method for
         finding records that match specific criteria.
-        
+
         Parameters
         ----------
         \*predicates : RQL.RQLExpr
@@ -171,23 +175,23 @@ class Client:
             Additional keyword arguments that specify field constraints or
             filters. Each key-value pair represents a field name and its
             required value.
-        
+
         Returns
         -------
         BVBRCResponse
             A response object (derived from the requests.Response object)
             containing the query results and associated response metadata.
-        
+
         Examples
         --------
         Basic search with field constraints:
-        
+
         >>> import bvbrc as bv
         >>> genome_client = bv.GenomeClient()
         >>> response = genome_client.search(species="Escherichia coli", limit=10)
-        
+
         Advanced search with predicates:
-        
+
         >>> response = genome_client.search(
         ...     bv.fld("genome_length") > 5000000,
         ...     bv.fld("genome_status") == "Complete",
@@ -210,30 +214,30 @@ class Client:
         ...     limit=50
         ... )
         """
-        
+
         query = RQL.RQLQuery.build(
             *predicates,
             select=select,
             sort=sort,
             limit=limit,
             start=start,
-            **constraints
+            **constraints,
         )
         return self.submit_query(query, return_format=return_format, timeout=timeout)
 
     def submit_query(
-            self,
-            query: RQL.RQLQuery,
-            *,
-            return_format: Union[str, ReturnFormat] = ReturnFormat.JSON,
-            timeout: Optional[_Timeout] = None
-        ) -> BVBRCResponse:
+        self,
+        query: RQL.RQLQuery,
+        *,
+        return_format: Union[str, ReturnFormat] = ReturnFormat.JSON,
+        timeout: Optional[_Timeout] = None,
+    ) -> BVBRCResponse:
         """
         Submit a pre-built RQL query to the BV-BRC API.
-        
+
         This method is useful when you have already built a query using the
         `bvbrc.query` method and want to submit it with a client.
-        
+
         Parameters
         ----------
         query : RQL.RQLQuery
@@ -246,17 +250,17 @@ class Client:
         timeout : float or tuple, optional
             Timeout for the HTTP request. Can be a single float (total timeout)
             or a tuple of (connect_timeout, read_timeout).
-        
+
         Returns
         -------
         BVBRCResponse
             A response object (derived from the requests.Response object)
             containing the query results and associated response metadata.
-        
+
         Examples
         --------
         Build and submit a query:
-        
+
         >>> import bvbrc as bv
         >>> q = bv.query(
         ...     bv.fld("genome_name") == "Escherichia coli",
@@ -265,9 +269,9 @@ class Client:
         ... )
         >>> client = bv.GenomeClient()
         >>> response = client.submit_query(q)
-        
+
         Specify the return format:
-        
+
         >>> response = client.submit_query(
         ...     q,
         ...     return_format=bv.ReturnFormat.CSV
@@ -281,25 +285,25 @@ class Client:
             query.expression,
             content_type=query.content_type,
             return_format=ReturnFormat(return_format).value,
-            timeout=timeout
-        )        
+            timeout=timeout,
+        )
 
     def _exec_query(
-            self,
-            query: str,
-            *,
-            content_type: str = "application/x-www-form-urlencoded",
-            return_format: str = "application/json",
-            timeout: Optional[_Timeout] = None
-        ) -> BVBRCResponse:
+        self,
+        query: str,
+        *,
+        content_type: str = "application/x-www-form-urlencoded",
+        return_format: str = "application/json",
+        timeout: Optional[_Timeout] = None,
+    ) -> BVBRCResponse:
         """
         Execute a raw query string against the BV-BRC API.
-        
+
         This is a low-level method that sends a raw query string directly to the
         BV-BRC API endpoint. It's primarily used internally by other methods, but
         can be used directly for advanced use cases where you need full control
         over the query format.
-        
+
         Parameters
         ----------
         query : str
@@ -312,16 +316,16 @@ class Client:
         timeout : float or tuple, optional
             Timeout for the HTTP request. Can be a single float (total timeout)
             or a tuple of (connect_timeout, read_timeout).
-        
+
         Returns
         -------
         BVBRCResponse
             A response object containing the query results and metadata.
-        
+
         Examples
         --------
         Execute a raw RQL query:
-        
+
         >>> import bvbrc as bv
         >>> client = bv.GenomeClient()
         >>> raw_query = "eq(species,Escherichia%20coli)&limit(10)"
@@ -331,10 +335,7 @@ class Client:
         rq_response = requests.post(
             self.URL,
             data=query,
-            headers={
-                "Content-Type": content_type,
-                "Accept": return_format
-            },
-            timeout=timeout
+            headers={"Content-Type": content_type, "Accept": return_format},
+            timeout=timeout,
         )
         return BVBRCResponse.from_response(rq_response)

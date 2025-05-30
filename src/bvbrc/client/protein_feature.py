@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class ProteinFeatureClient(Client):
     """
     Data Type : protein_feature
-    
+
     Primary Key : id
     """
-    
+
     aa_sequence_md5 = Field("aa_sequence_md5")
     "string"
 
@@ -100,7 +100,7 @@ class ProteinFeatureClient(Client):
     taxon_id = Field("taxon_id")
     "integer"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="protein_feature", api_key=api_key)
 
     def __repr__(self) -> str:

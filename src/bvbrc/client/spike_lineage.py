@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class SpikeLineageClient(Client):
     """
     Data Type : spike_lineage
-    
+
     Primary Key : id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -55,7 +55,7 @@ class SpikeLineageClient(Client):
     total_isolates = Field("total_isolates")
     "integer"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="spike_lineage", api_key=api_key)
 
     def __repr__(self) -> str:

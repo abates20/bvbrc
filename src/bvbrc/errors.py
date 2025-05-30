@@ -5,10 +5,7 @@ Errors module
 Defines custom error types for the bvbrc package.
 """
 
-__all__ = [
-    "BVBRCError",
-    "ToDataFrameError"
-]
+__all__ = ["BVBRCError", "ToDataFrameError"]
 
 
 from bvbrc.return_format import ReturnFormat
@@ -20,6 +17,7 @@ class BVBRCError(Exception):
     """
 
     pass
+
 
 class ToDataFrameError(BVBRCError):
     """

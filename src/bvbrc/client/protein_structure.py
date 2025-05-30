@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class ProteinStructureClient(Client):
     """
     Data Type : protein_structure
-    
+
     Primary Key : pdb_id
     """
-    
+
     alignments = Field("alignments")
     "array of strings"
 
@@ -85,7 +85,7 @@ class ProteinStructureClient(Client):
     uniprotkb_accession = Field("uniprotkb_accession")
     "array of strings"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="protein_structure", api_key=api_key)
 
     def __repr__(self) -> str:

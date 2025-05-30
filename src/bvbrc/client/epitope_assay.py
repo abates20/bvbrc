@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class EpitopeAssayClient(Client):
     """
     Data Type : epitope_assay
-    
+
     Primary Key : assay_id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -103,7 +103,7 @@ class EpitopeAssayClient(Client):
     title = Field("title")
     "case insensitive string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="epitope_assay", api_key=api_key)
 
     def __repr__(self) -> str:

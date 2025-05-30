@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class ExperimentClient(Client):
     """
     Data Type : experiment
-    
+
     Primary Key : exp_id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -118,7 +118,7 @@ class ExperimentClient(Client):
     treatment_type = Field("treatment_type")
     "array of case insensitive strings"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="experiment", api_key=api_key)
 
     def __repr__(self) -> str:

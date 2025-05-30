@@ -63,8 +63,41 @@ Here are the basic steps to set up your local development environment:
     dependencies. I used [uv](https://docs.astral.sh/uv/) for this project:
 
     ```shell
-    uv 
+    uv venv # Create the venv
+    uv sync # Install dependencies into it
     ```
+
+4. Create a new branch for development:
+
+    ```shell
+    git checkout -b name-of-your-branch
+    ```
+
+5. After making changes, make sure the code passes linting and any tests:
+
+    ```shell
+    uv run ruff check src
+    uv run ruff format src
+    # Tests have not been implemented yet
+    ```
+
+6. Commit your changes and push your branch to GitHub:
+
+    ```shell
+    git add .
+    git commit -m "Description of your changes"
+    git push origin name-of-your-branch
+    ```
+
+7. Submit a pull request on GitHub (make sure you follow the guidlines below).
+
+## Pull Request Guidelines
+
+Any pull requests should follow these guidelines:
+
+- Include tests to ensure that the code changes are working properly.
+- Update the docs appropriately based on any changes made.
+- The code should work for all supported python versions (see pyproject.toml)
 
 ## Code of Conduct
 

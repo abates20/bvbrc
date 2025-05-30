@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class BiosetResultClient(Client):
     """
     Data Type : bioset_result
-    
+
     Primary Key : id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -133,7 +133,7 @@ class BiosetResultClient(Client):
     z_score = Field("z_score")
     "number"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="bioset_result", api_key=api_key)
 
     def __repr__(self) -> str:

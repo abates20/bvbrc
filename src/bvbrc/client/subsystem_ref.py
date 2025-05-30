@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class SubsystemRefClient(Client):
     """
     Data Type : subsystem_ref
-    
+
     Primary Key : id
     """
-    
+
     _version_ = Field("_version_")
     "number"
 
@@ -55,7 +55,7 @@ class SubsystemRefClient(Client):
     superclass = Field("superclass")
     "string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="subsystem_ref", api_key=api_key)
 
     def __repr__(self) -> str:

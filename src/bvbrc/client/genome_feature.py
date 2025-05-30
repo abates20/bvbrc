@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class GenomeFeatureClient(Client):
     """
     Data Type : genome_feature
-    
+
     Primary Key : feature_id
     """
-    
+
     aa_length = Field("aa_length")
     "integer"
 
@@ -148,7 +148,7 @@ class GenomeFeatureClient(Client):
     user_write = Field("user_write")
     "array of strings"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="genome_feature", api_key=api_key)
 
     def __repr__(self) -> str:

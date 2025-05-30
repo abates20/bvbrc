@@ -5,10 +5,10 @@ from bvbrc.RQL import Field
 class SequenceFeatureVtClient(Client):
     """
     Data Type : sequence_feature_vt
-    
+
     Primary Key : id
     """
-    
+
     additional_metadata = Field("additional_metadata")
     "array of case insensitive strings"
 
@@ -61,7 +61,7 @@ class SequenceFeatureVtClient(Client):
     sfvt_variations = Field("sfvt_variations")
     "string"
 
-    def __init__(self, api_key = None):
+    def __init__(self, api_key=None):
         super().__init__(datatype="sequence_feature_vt", api_key=api_key)
 
     def __repr__(self) -> str:
