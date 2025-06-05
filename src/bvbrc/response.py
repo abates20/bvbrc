@@ -62,7 +62,7 @@ class BVBRCResponse(Response):
 
         content_range = self.headers.get("content-range")
         if content_range is None:
-            raise None
+            return None
 
         crange_pattern = re.compile(r"items (\d+)-(\d+)/(\d+)")
         matches = crange_pattern.findall(content_range)

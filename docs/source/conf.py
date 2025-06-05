@@ -15,6 +15,7 @@ author = 'Adam Bates'
 
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx_tabs.tabs',
 ]
 pygments_style = 'sphinx'
 templates_path = ['_templates']

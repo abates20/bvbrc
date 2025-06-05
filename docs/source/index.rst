@@ -9,7 +9,8 @@ a `Data API`_ that can be used to request data from BV-BRC in your own
 workflows.
 
 :code:`bvbrc` is a python package that is intended to make interacting with the
-BV-BRC Data API within python code feel straightfoward and intuitive.
+BV-BRC Data API within python code feel straightfoward and intuitive. Take a
+look at the :doc:`quickstart <quickstart>` to get started!
 
 Installation
 ------------
@@ -19,13 +20,23 @@ Installation
    pip install bvbrc
 
 If you want to be able to convert the API responses to a :code:`pandas` or
-:code:`polars` DataFrame, then you must also install the appropriate package::
-      
-      pip install pandas
+:code:`polars` DataFrame, then you must also install the appropriate package:
 
-or ::
+|
 
-      pip install polars
+.. tabs::
+
+      .. tab:: pandas
+
+            ::
+
+                  pip install pandas
+
+      .. tab:: polars
+
+            ::
+
+                  pip install polars
 
 Contributing
 ------------
@@ -38,9 +49,9 @@ in contributing, please visit the `GitHub page`_ to find out more.
    
    quickstart
    api_reference/index
-   bvbrc @ GitHub <https://github.com/abates20/bvbrc>
+   bvbrc @ GitHub <https://www.github.com/abates20/bvbrc>
 
 .. Links
 .. _Bacterial and Viral Bioinformatics Resource Center (BV-BRC): https://bv-brc.org
-.. _Data API: https://bv-brc.org/api
-.. _GitHub page: https://github.com/abates20/bvbrc
+.. _Data API: https://www.bv-brc.org/api
+.. _GitHub page: https://www.github.com/abates20/bvbrc
